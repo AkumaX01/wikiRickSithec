@@ -1,0 +1,31 @@
+<div class="flex justify-center items-center space-x-4 mt-4">
+    <!-- Botón "Anterior" -->
+    <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50"
+        [disabled]="currentPage === 1"
+        (click)="previousPage()">
+        Anterior
+    </button>
+
+    <!-- Páginas -->
+    <div class="flex space-x-2">
+        <span *ngFor="let page of pages" 
+              (click)="goToPage(page)" 
+              class="cursor-pointer px-3 py-1 rounded-full"
+              [ngClass]="{
+                  'bg-blue-500 text-white': page === currentPage,
+                  'bg-gray-200 text-gray-700': page !== currentPage,
+                  'hover:bg-gray-300': page !== currentPage
+              }">
+            {{ page }}
+        </span>
+    </div>
+
+    <!-- Botón "Siguiente" -->
+    <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50"
+        [disabled]="currentPage === totalPages"
+        (click)="nextPage()">
+        Siguiente
+    </button>
+</div>
