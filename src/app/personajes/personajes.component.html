@@ -105,20 +105,20 @@
                         
                         <li class="flex items-center space-x-2">
                             <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
-                                <img src="alien.png" alt="Alien" class="w-5 h-5" />
-                                <span>Alien</span>
+                                <img [src]="getImagenGenero(personaje.gender)" alt="Alien" class="w-5 h-5" />
+                                <span>{{personaje.gender}}</span>
                             </a>
                         </li>
                         <li class="flex items-center space-x-2">
                             <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
-                                <img src="masculino.png" alt="Masculino" class="w-5 h-5" />
-                                <span>Masculino</span>
+                                <img [src]="getImagenEstado(personaje.status)" alt="Masculino" class="w-5 h-5" />
+                                <span>{{personaje.status}}</span>
                             </a>
                         </li>
                         <li class="flex items-center space-x-2">
                             <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
-                                <img src="humano.png" alt="Humano" class="w-5 h-5" />
-                                <span>Humano</span>
+                                <img src="ubicacion.png" alt="Humano" class="w-5 h-5" />
+                                <span>{{personaje.location.name}}</span>
                             </a>
                         </li>
                     </ul>
@@ -127,10 +127,8 @@
             </div> 
         <!-- final cartas personajes-->
   
-        <!-- empieza paginacion-->
        
-        <!-- termina paginacion-->
-        
+      
   
   
             
@@ -138,3 +136,11 @@
         </div>  
     </div>
   </section>
+   <!-- empieza paginacion-->
+       <!-- Componente de Paginación -->
+       <app-paginacion 
+       [currentPage]="currentPage" 
+       [totalPages]="totalPages" 
+       (pageChange)="onPageChange($event)">
+       </app-paginacion>
+       <!-- termina paginacion-->

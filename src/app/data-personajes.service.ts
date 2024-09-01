@@ -7,11 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class DataPersonajesService {
 
-  private apiUrl = 'https://rickandmortyapi.com/api/character/?page=1';
+  private apiUrl = 'https://rickandmortyapi.com/api/character/';
 
   constructor(private http: HttpClient) { }
 
-  getInformacionPersonajes(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  // Método que recibe el número de página
+  getInformacionPersonajes(page: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?page=${page}`);
   }
 }
