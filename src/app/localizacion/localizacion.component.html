@@ -1,0 +1,45 @@
+<section class="bg-white dark:bg-gray-900 py-12">
+    <!-- Botón de regresar -->
+    <div class="text-center mb-8">
+        <a href="" (click)="irAtras()" class="text-blue-500 mb-6 inline-flex items-center text-lg font-semibold">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Go back
+        </a>
+    </div>
+
+    <!-- Título de la ubicación -->
+    <div class="text-center mb-12 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg mx-auto max-w-screen-xl lg:px-6">
+        <h1 class="text-6xl font-extrabold text-gray-900 dark:text-white">
+          "{{ episodio.name }}"
+        </h1>
+        <div class="mt-4 text-3xl text-gray-700 dark:text-gray-300">
+          <h2 class="inline mr-1">{{ episodio.type }}</h2>
+          -
+          <h2 class="ml-1 inline text-gray-600 dark:text-gray-400">{{ episodio.dimension }}</h2>
+          <div class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+            <!-- Añadir la fecha aquí -->
+            <span>Creation Date: {{ episodio.created | date }}</span>
+          </div>
+        </div>
+    </div>
+      
+    <!-- Fin del título de la ubicación -->
+  
+    <!-- Galería de personajes -->
+    <div class="bg-gray-100 py-6 px-4 mx-auto max-w-screen-xl lg:px-6 rounded-lg">
+      <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div *ngFor="let personaje of personajes" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300 ease-in-out p-4">
+          <a [routerLink]="['/localizacion', personaje.location.url]">
+            <img class="w-full h-56 object-cover rounded-t-lg" [src]="personaje.image" [alt]="personaje.name">
+          </a>
+          <div class="mt-4 text-center">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+              {{ personaje.name }}
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>

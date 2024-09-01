@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataPersonajesService } from '../data-personajes.service';
 import { SeleccionarImagenService } from '../seleccionar-imagen.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-informacion-personaje',  
@@ -9,14 +11,14 @@ import { SeleccionarImagenService } from '../seleccionar-imagen.service';
   styleUrls: ['./informacion-personaje.component.css']  
 })
 export class InformacionPersonajeComponent implements OnInit {
-  personaje: any;  // Variable para almacenar la información del personaje obtenido desde el servicio
+  personaje: any = {};  // Variable para almacenar la información del personaje obtenido desde el servicio
   episodios: any[] = [];  // Variable para almacenar la información de los episodios asociados al personaje
   isFeaturedInVisible = true;
   constructor(
     private route: ActivatedRoute,  // Servicio para acceder a los parámetros de la ruta activa
     private dataPersonajesService: DataPersonajesService,  // Servicio personalizado para obtener datos desde una API
-    private seleccionarImagenServicio: SeleccionarImagenService
-    
+    private seleccionarImagenServicio: SeleccionarImagenService,
+    private location: Location //para regresar a la ruta anterior
   ) { }
 
   ngOnInit(): void {
@@ -84,5 +86,8 @@ export class InformacionPersonajeComponent implements OnInit {
   }
   toggleFeaturedIn() {
     this.isFeaturedInVisible = !this.isFeaturedInVisible;
+  }
+  irAtras(): void {
+    this.location.back(); // Regresa a la página anterior en el historial
   }
 }

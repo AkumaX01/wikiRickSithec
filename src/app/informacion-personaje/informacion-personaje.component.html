@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
         <!-- Columna Izquierda - Detalles del Personaje -->
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg p-8 transition-colors duration-300 flex-grow lg:w-2/3">
-            <a href="#" class="text-blue-500 mb-6 inline-flex items-center text-lg font-semibold">
+            <a href="" (click)="irAtras()" class="text-blue-500 mb-6 inline-flex items-center text-lg font-semibold">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
@@ -51,13 +51,26 @@
                             {{ personaje?.origin?.name || 'Unknown' }}
                         </span>
                     </li>
-                    <li class="flex items-center ">
+                    <li class="flex items-center">
                         <span class="font-bold text-2xl mr-4">Location:</span>
-                        <span class="flex items-center text-xl">
-                            <img src="ubicacion.png" alt="Location Icon" class="w-6 h-6 mr-2" />
-                            {{ personaje?.location?.name || 'Unknown' }}
-                        </span>
+                        <!-- Verifica que personaje y personaje.location no sean undefined -->
+                        <ng-container *ngIf="personaje && personaje.location">
+                            <a [routerLink]="['/localizacion', personaje.location.url]">
+                                <span class="flex items-center text-xl hover:text-green-700 dark:hover:text-blue-300 hover:font-bold hover:text-xl">
+                                    <img src="ubicacion.png" alt="Location Icon" class="w-6 h-6 mr-2" />
+                                    {{ personaje.location.name || 'Unknown' }}
+                                </span>
+                            </a>
+                        </ng-container>
+                        <!-- Mensaje alternativo si personaje o personaje.location están indefinidos -->
+                        <ng-container *ngIf="!personaje || !personaje.location">
+                            <span class="flex items-center text-xl text-gray-600 dark:text-gray-400">
+                                <img src="ubicacion.png" alt="Location Icon" class="w-6 h-6 mr-2" />
+                                Unknown
+                            </span>
+                        </ng-container>
                     </li>
+                    
                     <li class="flex items-center ">
                         <span class="font-bold text-2xl mr-4">Created:</span>
                         <span class="text-xl">{{ formatDate(personaje?.created) }}</span>
