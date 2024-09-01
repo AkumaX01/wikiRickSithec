@@ -32,20 +32,24 @@
 
     <!-- Inicio de filtro de personajes -->
     <form class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-1 xl:grid-cols-2">
-      <select id="estado" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>Status</option>
-        <option value="US">Alive</option>
-        <option value="CA">Dead</option>
-        <option value="FR">unknown</option>
+      <select id="estado" (change)="onStatusChange($event)"
+        class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="Status">Status</option>
+        <option value="Alive">Alive</option>
+        <option value="Dead">Dead</option>
+        <option value="unknown">unknown</option>
       </select>
-      <select id="especie" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>Genre</option>
-        <option value="US">Male</option>
-        <option value="CA">Female</option>
-        <option value="FR">Other</option>
+      <select id="genero" (change)="onGenderChange($event)"
+        class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="Genre">Genre</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
       </select>
-      
     </form>
+    
+    
+    
     <!-- final de filtro de personajes -->
 
     <!-- Componente de Paginación -->
@@ -117,7 +121,7 @@
             </li>
           </ul>
           <button type="button" class="w-full mt-11 text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            (click)="redirectToDetails(personaje.id)">
+            (click)="redireccionar_Detalles(personaje.id)">
             Mas informacion
             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>

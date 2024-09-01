@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataPersonajesService } from '../data-personajes.service';
 import { SeleccionarImagenService } from '../seleccionar-imagen.service';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-personajes',
   templateUrl: './personajes.component.html',
@@ -11,34 +12,25 @@ export class PersonajesComponent implements OnInit {
 
   personajes: any[] = [];
   filteredPersonajes: any[] = [];
-  totalPages: number = 0; // Total de páginas en el constructor obtenemos el valor desde un servicio
-  totalPersonajes: number=0;
+  totalPages: number = 0;
+  totalPersonajes: number = 0;
   paginaActual: number = 1;
-  searchText: string = ''; // Variable para el texto del buscador
-  loading: boolean = false; // Nueva variable para controlar la carga
+  searchText: string = '';
+  loading: boolean = false;
 
-  constructor(private personajesServicio: DataPersonajesService, private router: Router, private seleccionarImagenServicio: SeleccionarImagenService) { }
+  // Variables para los filtros
+  selectedStatus: string = 'Status';
+  selectedGender: string = 'Genre';
 
-  // Método para obtener la imagen correspondiente a la especie
-  getImagenEspecie(species: string): string {
-    return this.seleccionarImagenServicio.getImagenEspecie(species);
-  }
+  constructor(
+    private personajesServicio: DataPersonajesService,
+    private router: Router,
+    private seleccionarImagenServicio: SeleccionarImagenService
+  ) { }
 
-  // Método para obtener la imagen correspondiente al estado
-  getImagenEstado(estado: string): string {
-    return this.seleccionarImagenServicio.getImagenEstado(estado);
-  }
-
-  // Método para obtener la imagen correspondiente al género
-  getImagenGenero(genero: string): string {
-    return this.seleccionarImagenServicio.getImagenGenero(genero);
-  }
-
-  // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
     this.loadPersonajes(this.paginaActual);
-     // Suscribirse a totalPages$ para obtener el número total de páginas
-     this.personajesServicio.totalPaginas$.subscribe(pages => {
+    this.personajesServicio.totalPaginas$.subscribe(pages => {
       this.totalPages = pages;
     });
     this.personajesServicio.totalPersonajes$.subscribe(personajes => {
@@ -46,43 +38,82 @@ export class PersonajesComponent implements OnInit {
     });
   }
 
-  // Método para cargar personajes de la página específica
   loadPersonajes(page: number): void {
-    this.loading = true; // Establece la carga en true antes de la solicitud
+    this.loading = true;
     this.personajesServicio.getInformacionPersonajes(page).subscribe((data: any) => {
       this.personajes = data.results;
-      this.filterPersonajes(); // Filtrar personajes después de cargar los datos
-      this.loading = false; // Establece la carga en false después de la solicitud
+      this.filterPersonajes();
+      this.loading = false;
     }, error => {
-      this.loading = false; // También establece la carga en false en caso de error
+      this.loading = false;
     });
   }
 
-  // Filtrar personajes basados en el texto del buscador
   filterPersonajes(): void {
-    if (!this.searchText.trim()) {
-      this.filteredPersonajes = this.personajes;
-    } else {
-      this.filteredPersonajes = this.personajes.filter(personaje =>
+    let filtered = this.personajes;
+
+    // Filtrar por texto de búsqueda
+    if (this.searchText.trim()) {
+      filtered = filtered.filter(personaje =>
         personaje.name.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
-  }
 
-  // Manejar el cambio de página
+    // Filtrar por estado
+    if (this.selectedStatus !== 'Status') {
+      filtered = filtered.filter(personaje =>
+        personaje.status === this.selectedStatus
+      );
+    }
+
+    // Filtrar por género
+    if (this.selectedGender !== 'Genre') {
+      filtered = filtered.filter(personaje =>
+        personaje.gender === this.selectedGender
+      );
+    }
+
+    this.filteredPersonajes = filtered;
+  }
+ //cambiamos de pagina, debemos hacer la llamada al api para la siguiente pagina
   onPageChange(page: number): void {
     this.paginaActual = page;
     this.loadPersonajes(page);
   }
 
-  // Manejar el cambio en el texto del buscador
+  //buscador
   onSearchChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.searchText = input.value;
     this.filterPersonajes();
   }
 
-  redirectToDetails(id: number): void {
+  // Métodos para manejar cambios en los selectores
+  onStatusChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.selectedStatus = select.value;
+    this.filterPersonajes();
+  }
+  //si cambia el select de genero
+  onGenderChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.selectedGender = select.value;
+    this.filterPersonajes();
+  }
+
+  redireccionar_Detalles(id: number): void {
     this.router.navigate(['/informacionPersonaje', id]);
+  }
+
+  getImagenEspecie(species: string): string {
+    return this.seleccionarImagenServicio.getImagenEspecie(species);
+  }
+
+  getImagenEstado(estado: string): string {
+    return this.seleccionarImagenServicio.getImagenEstado(estado);
+  }
+
+  getImagenGenero(genero: string): string {
+    return this.seleccionarImagenServicio.getImagenGenero(genero);
   }
 }
