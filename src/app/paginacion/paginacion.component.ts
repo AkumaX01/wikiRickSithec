@@ -7,10 +7,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class PaginacionComponent {
   @Input() currentPage: number = 1;
-  @Input() totalPages: number = 42; // Número total de páginas
+  @Input() totalPages: number = 0; // Usar el total de páginas recibido como entrada
   @Output() pageChange = new EventEmitter<number>();
 
-  // Crear una lista de páginas visibles según la página actual
   get pages(): number[] {
     const visiblePages = 5; // Número de páginas visibles (incluyendo la página actual)
     const pages: number[] = [];
@@ -25,7 +24,7 @@ export class PaginacionComponent {
     return pages;
   }
 
-  changePage(page: number): void {
+  cambiarPagina(page: number): void {
     if (page > 0 && page <= this.totalPages) {
       this.pageChange.emit(page);
     }

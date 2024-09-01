@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataPersonajesService } from '../data-personajes.service';
+import { SeleccionarImagenService } from '../seleccionar-imagen.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-personajes',
@@ -10,50 +11,39 @@ export class PersonajesComponent implements OnInit {
 
   personajes: any[] = [];
   filteredPersonajes: any[] = [];
-  totalPages: number = 42; // Total de páginas, ajusta si es necesario
-  currentPage: number = 1;
+  totalPages: number = 0; // Total de páginas en el constructor obtenemos el valor desde un servicio
+  totalPersonajes: number=0;
+  paginaActual: number = 1;
   searchText: string = ''; // Variable para el texto del buscador
   loading: boolean = false; // Nueva variable para controlar la carga
 
-  constructor(private personajesServicio: DataPersonajesService, private router: Router) { }
+  constructor(private personajesServicio: DataPersonajesService, private router: Router, private seleccionarImagenServicio: SeleccionarImagenService) { }
 
-  // Método para obtener la imagen según la especie
+  // Método para obtener la imagen correspondiente a la especie
   getImagenEspecie(species: string): string {
-    switch (species) {
-      case 'Human':
-        return 'humano.png';
-      case 'Alien':
-        return 'alien.png';
-      default:
-        return 'especieDesconocida.png';
-    }
+    return this.seleccionarImagenServicio.getImagenEspecie(species);
   }
- 
+
+  // Método para obtener la imagen correspondiente al estado
   getImagenEstado(estado: string): string {
-    switch (estado) {
-      case 'Alive':
-        return 'vivo.png';
-      case 'Dead':
-        return 'muerto.png';
-      default:
-        return 'niIdea.png';
-    }
+    return this.seleccionarImagenServicio.getImagenEstado(estado);
   }
-  
+
+  // Método para obtener la imagen correspondiente al género
   getImagenGenero(genero: string): string {
-    switch (genero) {
-      case 'Male':
-        return 'masculino.png';
-      case 'Female':
-        return 'femenino.png';
-      default:
-        return 'desconocido.png';
-    }
+    return this.seleccionarImagenServicio.getImagenGenero(genero);
   }
 
   // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
-    this.loadPersonajes(this.currentPage);
+    this.loadPersonajes(this.paginaActual);
+     // Suscribirse a totalPages$ para obtener el número total de páginas
+     this.personajesServicio.totalPaginas$.subscribe(pages => {
+      this.totalPages = pages;
+    });
+    this.personajesServicio.totalPersonajes$.subscribe(personajes => {
+      this.totalPersonajes = personajes;
+    });
   }
 
   // Método para cargar personajes de la página específica
@@ -81,7 +71,7 @@ export class PersonajesComponent implements OnInit {
 
   // Manejar el cambio de página
   onPageChange(page: number): void {
-    this.currentPage = page;
+    this.paginaActual = page;
     this.loadPersonajes(page);
   }
 
