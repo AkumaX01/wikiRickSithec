@@ -1,32 +1,35 @@
-<nav class="flex justify-center  mb-14">
-    <ul class="inline-flex -space-x-px">
-      <!-- Botón "Previous" -->
-      <li>
-        <button (click)="changePage(currentPage - 1)" 
-                [disabled]="currentPage === 1"
-                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-          Previous
-        </button>
-      </li>
-  
-      <!-- Páginas visibles -->
-      <li *ngFor="let page of pages">
-        <button (click)="changePage(page)" 
-                [class.bg-blue-500]="page === currentPage"
-                [class.text-white]="page === currentPage"
-                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-          {{ page }}
-        </button>
-      </li>
-  
-      <!-- Botón "Next" -->
-      <li>
-        <button (click)="changePage(currentPage + 1)" 
-                [disabled]="currentPage === totalPages"
-                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-          Next
-        </button>
-      </li>
-    </ul>
-  </nav>
-  
+<nav class="flex justify-center mb-14">
+  <ul class="inline-flex -space-x-px text-base h-10">
+    <!-- Botón "Previous" -->
+    <li>
+      <button (click)="changePage(currentPage - 1)" 
+              [disabled]="currentPage === 1"
+              class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        Previous
+      </button>
+    </li>
+
+    <!-- Páginas visibles -->
+    <li *ngFor="let page of pages">
+      <button (click)="changePage(page)" 
+              [class.bg-blue-50]="page === currentPage"
+              [class.text-blue-600]="page === currentPage"
+              [class.border-gray-300]="true" 
+              [class.border]="true"         
+              [class.hover\:bg-blue-100]="page === currentPage"
+              [class.hover\:text-blue-700]="page === currentPage"
+              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        {{ page }}
+      </button>
+    </li>
+
+    <!-- Botón "Next" -->
+    <li>
+      <button (click)="changePage(currentPage + 1)" 
+              [disabled]="currentPage === totalPages"
+              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        Next
+      </button>
+    </li>
+  </ul>
+</nav>

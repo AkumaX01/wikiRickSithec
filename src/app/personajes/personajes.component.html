@@ -1,48 +1,37 @@
-<!-- personaje.component.html -->
-<div class="w-32 h-32 mx-auto">
-    <img src="portal.gif" alt="gift de carga" class="w-full h-full object-cover" />
-  </div>
-  
-  
-
-
-<h1 class="text-3xl font-bold underline ">
-    Hello world!
-  </h1>
   
   <section class="bg-white dark:bg-gray-900 ">
+    
+    
     <div class="py-8 px-4 mx-auto max-w-screen-2xl lg:py-16 lg:px-6 ">
-        <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Our Team</h2>
-            <p class="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">Explore the whole collection of open-source web components and elements built with the utility classes from Tailwind</p>
-        </div> 
+        
         
         <!-- Inicio de buscador de personasjes -->
-        <div class="relative w-fullmax-w-screen-2xl mx-auto mb-6">
-          <input
-            type="text"
-            class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Busca algun personaje..."
-            aria-label="Search"
-          />
-          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg
-              aria-hidden="true"
-              class="w-5 h-5 text-gray-500 dark:text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-4.35-4.35M18.364 13.636a7.5 7.5 0 1 1-2.121-2.121 7.5 7.5 0 0 1 2.121 2.121z"
-              ></path>
-            </svg>
+        <div class="relative w-full max-w-screen-2xl mx-auto mb-6">
+            <input
+              type="text"
+              class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Busca algún personaje..."
+              aria-label="Search"
+              (input)="onSearchChange($event)"
+            />
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg
+                aria-hidden="true"
+                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-4.35-4.35M18.364 13.636a7.5 7.5 0 1 1-2.121-2.121 7.5 7.5 0 0 1 2.121 2.121z"
+                ></path>
+              </svg>
+            </div>
           </div>
-        </div>
         <!-- final de buscador de personasjes -->
         
   
@@ -81,59 +70,58 @@
         </form>
         <!-- final de filtro de personasjes -->
   
-  
+        <!-- Muestra el GIF de carga solo cuando loading es true -->
+        <div *ngIf="loading" class="w-32 h-32 mx-auto">
+            <img src="portal.gif" alt="GIF de carga" class="w-full h-full object-cover" />
+        </div>
+
         <!-- inicio cartas personajes -->
-        <div class="grid gap-8 mb-6 lg:mb-16  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
-          <div *ngFor="let personaje of personajes" class="items-center bg-gray-50 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                <a href="#">
-                    <img class="w-full rounded-lg  " [src]="personaje.image" alt="{{personaje.name}}">
-                </a>
-                <div class="p-5">
-                    <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        <a href="#">{{personaje.name}}</a>
-                        
-                    </h3>
-                    
-                    <div class="flex items-center space-x-2">
-                        <span class="text-gray-500 dark:text-gray-400">{{ personaje.species }}</span>
-                        <img [src]="getImagenEspecie(personaje.species)" alt="Descripción de la imagen" class="w-5 h-5" />
-                    </div>
-                    
-                    <p class=" mb-4 font-light text-gray-500 dark:text-gray-400"></p>
-                    <hr class=" mb-2 b">
-                    <ul class="flex-col sm:mt-0 space-y-2">
-                        
-                        <li class="flex items-center space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
-                                <img [src]="getImagenGenero(personaje.gender)" alt="Alien" class="w-5 h-5" />
-                                <span>{{personaje.gender}}</span>
-                            </a>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
-                                <img [src]="getImagenEstado(personaje.status)" alt="Masculino" class="w-5 h-5" />
-                                <span>{{personaje.status}}</span>
-                            </a>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
-                                <img src="ubicacion.png" alt="Humano" class="w-5 h-5" />
-                                <span>{{personaje.location.name}}</span>
-                            </a>
-                        </li>
-                    </ul>
-                    
+        <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div *ngFor="let personaje of filteredPersonajes" class="items-center bg-gray-50 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transform transition-transform duration-300 hover:scale-105">
+              <a href="#">
+                <img class="w-full rounded-lg" [src]="personaje.image" alt="{{personaje.name}}">
+              </a>
+              <div class="p-5">
+                <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  <a href="#">{{personaje.name}}</a>
+                </h3>
+                <div class="flex items-center space-x-2">
+                  <span class="text-gray-500 dark:text-gray-400">{{ personaje.species }}</span>
+                  <img [src]="getImagenEspecie(personaje.species)" alt="Descripción de la imagen" class="w-5 h-5" />
                 </div>
-            </div> 
+                <p class="mb-4 font-light text-gray-500 dark:text-gray-400"></p>
+                <hr class="mb-2 b">
+                <ul class="flex-col sm:mt-0 space-y-2">
+                  <li class="flex items-center space-x-2">
+                    <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
+                      <img [src]="getImagenGenero(personaje.gender)" alt="Alien" class="w-5 h-5" />
+                      <span>{{personaje.gender}}</span>
+                    </a>
+                  </li>
+                  <li class="flex items-center space-x-2">
+                    <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
+                      <img [src]="getImagenEstado(personaje.status)" alt="Masculino" class="w-5 h-5" />
+                      <span>{{personaje.status}}</span>
+                    </a>
+                  </li>
+                  <li class="flex items-center space-x-2">
+                    <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
+                      <img src="ubicacion.png" alt="Humano" class="w-5 h-5" />
+                      <span>{{personaje.location.name}}</span>
+                    </a>
+                  </li>
+                </ul>
+                <button type="button" class="w-full mt-6 text-white  bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                (click)="redirectToDetails(personaje.id)">
+                    Mas informacion
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </button>
+              </div>
+            </div>
+          </div>
         <!-- final cartas personajes-->
-  
-       
-      
-  
-  
-            
-           
-        </div>  
     </div>
   </section>
    <!-- empieza paginacion-->
