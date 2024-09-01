@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -20,8 +20,13 @@ export class LocalizacionComponent implements OnInit {
     private router: Router,
     private location: Location
   ) {
-    // Guardar la URL previa en el historial
-    this.previousUrl = window.history.state?.previousUrl || null;
+    // Suscribirse a los eventos de navegación
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        // Guardar la URL previa antes de la navegación
+        this.previousUrl = event.url;
+      }
+    });
   }
 
   ngOnInit(): void {
