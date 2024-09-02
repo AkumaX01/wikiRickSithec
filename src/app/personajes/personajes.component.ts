@@ -80,7 +80,8 @@ export class PersonajesComponent implements OnInit {
 
     this.filteredPersonajes = filtered;
   }
- //cambiamos de pagina, debemos hacer la llamada al api para la siguiente pagina
+
+  //cambiamos de pagina, debemos hacer la llamada al api para la siguiente pagina
   onPageChange(page: number): void {
     this.paginaActual = page;
     this.loadPersonajes(page);
@@ -120,5 +121,16 @@ export class PersonajesComponent implements OnInit {
 
   getImagenGenero(genero: string): string {
     return this.seleccionarImagenServicio.getImagenGenero(genero);
+  }
+
+  // Nueva función para cambiar la imagen y luego redirigir
+  mostrarGifYRedirigir(personajeImagen: HTMLImageElement, id: number): void {
+    // Cambiar la imagen al gif
+    personajeImagen.src = 'portal.gif'; // Ruta del gif
+
+    // Esperar 1 segundo y luego redirigir
+    setTimeout(() => {
+      this.redireccionar_Detalles(id);
+    }, 1000);
   }
 }
