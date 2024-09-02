@@ -9,6 +9,7 @@ import { PaginacionComponent } from './paginacion/paginacion.component';
 import { InformacionPersonajeComponent } from './informacion-personaje/informacion-personaje.component';
 import { LocalizacionComponent } from './localizacion/localizacion.component';
 import { EpisodioComponent } from './episodio/episodio.component';
+import { ThemeBotonComponent } from './theme-boton/theme-boton.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { EpisodioComponent } from './episodio/episodio.component';
     PaginacionComponent,
     InformacionPersonajeComponent,
     LocalizacionComponent,
-    EpisodioComponent
+    EpisodioComponent,
+    ThemeBotonComponent
   ],
   imports: [
     BrowserModule,
