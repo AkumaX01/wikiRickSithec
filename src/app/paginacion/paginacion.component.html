@@ -4,21 +4,19 @@
     <li>
       <button (click)="cambiarPagina(currentPage - 1)" 
               [disabled]="currentPage === 1"
-              class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-        Previous
+              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-gray-800 border border-gray-700 rounded-s-lg hover:bg-gray-700 hover:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        Go Back
       </button>
     </li>
 
     <!-- Páginas visibles -->
     <li *ngFor="let page of pages">
-      <button (click)="cambiarPagina(page)" 
-              [class.bg-blue-50]="page === currentPage"
-              [class.text-blue-600]="page === currentPage"
-              [class.border-gray-300]="true" 
-              [class.border]="true"         
-              [class.hover\:bg-blue-100]="page === currentPage"
-              [class.hover\:text-blue-700]="page === currentPage"
-              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+      <button (click)="cambiarPagina(page)"
+              [ngClass]="{
+                'bg-white text-blue-600 border-blue-600 dark:bg-gray-700 dark:text-blue-400 dark:border-blue-400': page === currentPage,
+                'bg-gray-800 text-gray-400 border-gray-700 hover:bg-gray-700 hover:text-white': page !== currentPage
+              }"
+              class="flex items-center justify-center px-4 h-10 leading-tight border rounded">
         {{ page }}
       </button>
     </li>
@@ -27,7 +25,7 @@
     <li>
       <button (click)="cambiarPagina(currentPage + 1)" 
               [disabled]="currentPage === totalPages"
-              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-gray-800 border border-gray-700 rounded-e-lg hover:bg-gray-700 hover:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
         Next
       </button>
     </li>
