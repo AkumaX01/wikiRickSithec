@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./personajes.component.css']
 })
 export class PersonajesComponent implements OnInit {
+  isDarkMode = true;
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+  }
 
   personajes: any[] = [];
   filteredPersonajes: any[] = [];

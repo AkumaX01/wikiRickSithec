@@ -1,5 +1,14 @@
-<section class="bg-white dark:bg-gray-900">
+
+<div [ngClass]="{ 'dark': isDarkMode }">
+<section class="bg-white dark:bg-gray-800 dark:border-gray-800" >
   <div class="py-8 px-4 mx-auto max-w-screen-2xl lg:py-16 lg:px-6">
+
+    <!-- Botón para alternar entre modos -->
+    <div class="flex justify-end mb-4">
+      <button (click)="toggleDarkMode()" class="p-2 bg-gray-700 text-white rounded">
+        Alternar Modo
+      </button>
+    </div>
 
     <!-- Inicio de buscador de personajes -->
     <div class="relative w-full max-w-screen-2xl mx-auto mb-6">
@@ -48,29 +57,24 @@
       </select>
     </form>
     
-    
-    
     <!-- final de filtro de personajes -->
 
     <!-- Componente de Paginación -->
-    
-      <div class=""> 
-        <app-paginacion 
-          [currentPage]="paginaActual" 
-          [totalPages]="totalPages" 
-          (pageChange)="onPageChange($event)">
-        </app-paginacion>
-      </div>
-    
+    <div class=""> 
+      <app-paginacion 
+        [currentPage]="paginaActual" 
+        [totalPages]="totalPages" 
+        (pageChange)="onPageChange($event)">
+      </app-paginacion>
+    </div>
     
     <!-- Mostrar la página actual y el total de páginas -->
-    <div class="flex justify-start mt-4 text-gray-700 dark:text-gray-300 text-2xl mb-3">
+    <div class="flex justify-start mt-4 text-gray-300 text-2xl mb-3">
       Page {{ paginaActual}} of {{ totalPages }}
     </div>
-    <div class="flex justify-start mt-4 text-gray-700 dark:text-gray-300 text-2xl mb-3">
+    <div class="flex justify-start mt-4 text-gray-300 text-2xl mb-3">
       Total of characters: {{ totalPersonajes }}
     </div>
-    
     
     <!-- termina paginación -->
 
@@ -81,7 +85,7 @@
 
     <!-- inicio cartas personajes -->
     <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      <div *ngFor="let personaje of filteredPersonajes" class="items-center bg-gray-50 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transform transition-transform duration-300 hover:scale-105">
+      <div *ngFor="let personaje of filteredPersonajes" class="items-center bg-gray-50 rounded-lg shadow dark:bg-gray-900 dark:border-gray-900 transform transition-transform duration-300 hover:scale-105">
         <a [href]="'/informacionPersonaje/' + personaje.id">
           <img class="w-full rounded-lg" [src]="personaje.image" alt="{{personaje.name}}">
         </a>
@@ -99,7 +103,11 @@
             <li class="flex items-center space-x-2">
               <div class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
                 <img [src]="getImagenGenero(personaje.gender)" alt="Alien" class="w-5 h-5" />
-                <span>{{personaje.gender}}</span>
+                <span [ngClass]="{
+                  'text-blue-300 dark:text-blue-400': personaje?.gender === 'Male',
+                  'text-purple-600 dark:text-purple-400': personaje?.gender === 'Female',
+                  'text-emerald-500 dark:text-emerald-400': personaje?.gender === 'unknown',
+              }">{{personaje.gender}}</span>
               </div>
             </li>
             <li class="flex items-center space-x-2">
@@ -113,10 +121,9 @@
               </div>
             </li>
             <li class="flex items-center space-x-2">
-              <a [routerLink]="['/localizacion',personaje.location.url]" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
+              <a [routerLink]="['/localizacion', personaje.location.url]" class="text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center">
                 <img src="ubicacion.png" alt="Humano" class="w-5 h-5" />
-                <span class=" hover:text-green-700 dark:hover:text-blue-300 hover:font-bold hover:text-xl">{{personaje.location.name}}</span>
-                
+                <span class="hover:text-green-700 dark:text-blue-200 dark:hover:text-blue-300 hover:font-bold hover:text-xl">{{personaje.location.name}}</span>
               </a>
             </li>
           </ul>
@@ -131,13 +138,14 @@
       </div>
     </div>
     <!-- final cartas personajes-->
-<!-- Componente de Paginación -->
+
+    <!-- Componente de Paginación -->
     <app-paginacion 
       [currentPage]="paginaActual" 
       [totalPages]="totalPages" 
       (pageChange)="onPageChange($event)">
     </app-paginacion>
-    
     <!-- termina paginación -->
   </div>
 </section>
+</div>
